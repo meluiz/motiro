@@ -1,4 +1,9 @@
 export const DEFAULT_OPTIONS = {
+  NORMALIZED_WORDS: {
+    prefix: '',
+    keep: [],
+    strict: true,
+  },
   TRUNCATED_STRING: {
     tags: true,
     strict: true,

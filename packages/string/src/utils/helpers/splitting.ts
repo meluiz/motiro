@@ -1,5 +1,66 @@
-import { HTML_COMMENT_REGEX, HTML_TAG_REGEX } from '../regexes';
+import { hasEmptySpace } from '../guards';
+import {
+  HTML_COMMENT_REGEX,
+  HTML_TAG_REGEX,
+  MAGIC_SPLIT_REGEX,
+  SPACE_SPLIT_REGEX,
+} from '../regexes';
 import { DEFAULT_OPTIONS, SELF_CLOSING_TAGS } from './constants';
+
+/**
+ * Finds the index of the first match of `regex` in `input`.
+ */
+export const getFirstLetterIndex = (input: string, regex: RegExp): number => {
+  const match = input.matchAll(regex).next().value;
+  return match?.index ?? 0;
+};
+
+/**
+ * Chooses the appropriate regex for splitting into words:
+ * - If there is any space, split on whitespace.
+ * - Otherwise, use the "magic" pattern.
+ */
+export const getWordSplitRegex = (input: string): RegExp => {
+  return hasEmptySpace(input) ? SPACE_SPLIT_REGEX : MAGIC_SPLIT_REGEX;
+};
+
+type WordsAndPrefixes = {
+  parts: string[];
+  prefixes: string[];
+};
+
+/**
+ * Splits `input` by `regex`, capturing each match and the text before it.
+ */
+export const getWordsAndPrefixes = (input: string, regex: RegExp): WordsAndPrefixes => {
+  const result: WordsAndPrefixes = { parts: [], prefixes: [] };
+  const matches = input.matchAll(regex);
+
+  let lastWordEndIndex = 0;
+
+  for (const match of matches) {
+    if (typeof match.index !== 'number') {
+      continue;
+    }
+
+    const word = match[0];
+    result.parts.push(word);
+
+    const prefix = input.slice(lastWordEndIndex, match.index).trim();
+    result.prefixes.push(prefix);
+
+    lastWordEndIndex = match.index + word.length;
+  }
+
+  const tail = input.slice(lastWordEndIndex).trim();
+
+  if (tail) {
+    result.parts.push('');
+    result.prefixes.push(tail);
+  }
+
+  return result;
+};
 
 /**
  * Strategy used to measure the truncation length.

@@ -1,3 +1,4 @@
+export { getCapitalizedToken, getCapitalizedWord, getNoCaseString } from './casing';
 export {
   DEFAULT_OPTIONS,
   DURATION_FORMAT_ORDER,
@@ -5,5 +6,5 @@ export {
   DURATION_UNITIES_MAP,
   SELF_CLOSING_TAGS,
 } from './constants';
-export { getTruncatedString } from './splitting';
+export { getFirstLetterIndex, getTruncatedString, getWordSplitRegex } from './splitting';
 export { getMillisecondsFormat, getMillisecondsParse } from './unit';
