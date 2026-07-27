@@ -4,5 +4,6 @@ export type { TruncateOptions } from './truncate';
 
 export { capitalize } from './capitalize';
 export { excerpt } from './excerpt';
+export { random } from './random';
 export { sentence } from './sentence';
 export { truncate } from './truncate';
