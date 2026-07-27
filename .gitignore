@@ -1,0 +1,40 @@
+# Generate output
+.data
+.docs
+.temp
+.next
+.nuxt
+.astro
+.nitro
+.cache
+.output
+out
+dist
+cache
+
+# Dependency directories
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Misc
+.zed
+.idea
+.fleet
+.vscode
+.claude
+.vercel
+.history
+.DS_Store
+.vite-hooks
+
+# Environment variables (Sensitive Data)
+.env
+.env.*
+!.env.example
