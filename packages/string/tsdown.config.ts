@@ -8,5 +8,4 @@ export default defineConfig({
   treeshake: true,
   format: ['esm', 'cjs'],
   entry: ['src/index.ts'],
-  publint: 'ci-only',
 });
