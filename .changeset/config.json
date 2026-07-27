@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "meluiz/pinda" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "meluiz/motiro" }],
   "linked": [],
   "ignore": [],
   "commit": false,
