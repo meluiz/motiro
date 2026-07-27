@@ -1,9 +1,9 @@
 {
-  "lockfileVersion": 2,
+  "lockfileVersion": 1,
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@pinda/monorepo",
+      "name": "@motiro/monorepo",
       "devDependencies": {
         "@biomejs/biome": "catalog:",
         "@changesets/changelog-github": "^0.7.0",
