@@ -1,5 +1,11 @@
 # @motiro/string
 
+## 0.1.1
+
+### Patch Changes
+
+- [`01d89e9`](https://github.com/meluiz/motiro/commit/01d89e99ae442c1ac764f237862f2f428ae4b9bc) Thanks [@meluiz](https://github.com/meluiz)! - Add build validation with publint and arethetypeswrong, extend shared tsconfig, and clean up tsdown config
+
 ## 0.1.0
 
 ### Minor Changes
