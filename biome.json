@@ -32,7 +32,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!.next", "!.void", "!**/*.svg"]
+    "includes": ["**", "!.next", "!.void", "!**/*.svg", "!**/dist"]
   },
   "formatter": {
     "enabled": true,
