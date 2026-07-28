@@ -4,8 +4,9 @@ export default defineConfig({
   dts: true,
   shims: true,
   clean: true,
+  exports: true,
   unbundle: true,
   treeshake: true,
-  format: ['esm', 'cjs'],
+  format: ['esm'],
   entry: ['src/index.ts'],
 });
