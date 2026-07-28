@@ -20,3 +20,10 @@ export type {
   UppercaseLetter,
   Whitespace,
 } from './string';
+export type {
+  Branded,
+  LiteralUnion,
+  Maybe,
+  Nullable,
+  Optional,
+} from './utility';
