@@ -58,7 +58,9 @@
     "clean": "rm -rf dist"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "catalog:",
     "@biomejs/biome": "catalog:",
+    "publint": "catalog:",
     "tsdown": "catalog:",
     "typescript": "catalog:"
   }

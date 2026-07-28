@@ -4,9 +4,10 @@ export default defineConfig({
   dts: true,
   shims: true,
   clean: true,
-  exports: true,
   unbundle: true,
   treeshake: true,
   format: ['esm'],
+  attw: 'ci-only',
+  publint: 'ci-only',
   entry: ['src/index.ts'],
 });
