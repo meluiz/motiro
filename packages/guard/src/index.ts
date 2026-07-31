@@ -12,6 +12,11 @@ export {
   optional,
 } from './combinators';
 export {
+  isEmptyArray,
+  isEmptyObject,
+  isEmptyString,
+} from './emptiness';
+export {
   isArray,
   isDate,
   isError,
