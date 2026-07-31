@@ -27,7 +27,7 @@
     "release": "changeset publish"
   },
   "workspaces": {
-    "packages": ["packages/*"],
+    "packages": ["apps/*", "packages/*"],
     "catalog": {
       "@arethetypeswrong/cli": "^0.18.5",
       "@biomejs/biome": "^2.5.5",
