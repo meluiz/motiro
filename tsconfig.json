@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "exclude": ["node_modules", "dist", "**/dist", "**/node_modules"],
+  "exclude": ["node_modules", "dist", "apps", "**/dist", "**/node_modules"],
   "compilerOptions": {
     "strict": true,
     "noEmit": true,
