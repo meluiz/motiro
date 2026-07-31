@@ -17,6 +17,14 @@ export {
   isEmptyString,
 } from './emptiness';
 export {
+  isInteger,
+  isNegative,
+  isNumberFinite,
+  isPositive,
+  isSafeInteger,
+  isZero,
+} from './numeric';
+export {
   isArray,
   isDate,
   isError,
