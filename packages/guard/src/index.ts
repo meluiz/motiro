@@ -40,3 +40,14 @@ export {
   isWeakMap,
   isWeakSet,
 } from './objects';
+export {
+  isBigInt,
+  isBoolean,
+  isDefined,
+  isNil,
+  isNull,
+  isNumber,
+  isString,
+  isSymbol,
+  isUndefined,
+} from './primitives';
