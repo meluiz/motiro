@@ -1,5 +1,11 @@
 # @motiro/string
 
+## 0.1.2
+
+### Patch Changes
+
+- [`b3d2265`](https://github.com/meluiz/motiro/commit/b3d2265166b7162dd520eea7161a854fa5feb38a) Thanks [@meluiz](https://github.com/meluiz)! - docs: add README to each package
+
 ## 0.1.1
 
 ### Patch Changes
