@@ -1,11 +1,7 @@
 import { shouldCapitalize } from './utils/guards';
-import {
-  getCapitalizedToken,
-  getCapitalizedWord,
-  getFirstLetterIndex,
-  getNoCaseString,
-} from './utils/helpers';
+import { getCapitalizedToken, getCapitalizedWord, getNoCaseString } from './utils/helpers';
 import { getNormalizedWords } from './utils/helpers/normalization';
+import { getFirstLetterIndex } from './utils/helpers/words';
 import { MAGIC_SPLIT_REGEX, TOKENS_REGEX } from './utils/regexes/split';
 
 export type CaseOptions = {
@@ -363,18 +359,8 @@ export const toTitleCase = (input: string): string => {
  * ```
  */
 export const toSentenceCase = (input: string): string => {
-  return getNoCaseString(input, (part, index) => {
-    const lowerCased = part.toLowerCase();
-
-    if (index === 0) {
-      const firstChar = lowerCased.charAt(0).toUpperCase();
-      const rest = lowerCased.slice(1);
-
-      return `${firstChar}${rest}`;
-    }
-
-    return lowerCased;
-  });
+  const normalized = getNoCaseString(input);
+  return `${normalized.charAt(0).toUpperCase()}${normalized.slice(1)}`;
 };
 
 /**
