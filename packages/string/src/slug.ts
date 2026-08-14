@@ -114,6 +114,9 @@ type TransformOptions = {
    */
   charset: Charset;
 
+  /** Locale-specific overrides checked before the default charset. */
+  localeCharset?: Charset;
+
   /**
    * Character used to separate words; occurrences produced by the mapping are
    * normalized to spaces before the final separator is applied.
@@ -927,12 +930,12 @@ const builder: SlugBuilder = (config = DEFAULT_OPTIONS) => {
   const mapping: SlugMapping = DEFAULT_MAPPING;
 
   const transform = (input: string, options: TransformOptions): string => {
-    const { charset, remove, separator } = options;
+    const { charset, localeCharset, remove, separator } = options;
 
     let output = '';
 
     for (const char of input.normalize()) {
-      let value = charset[char] ?? char;
+      let value = localeCharset?.[char] ?? charset[char] ?? char;
 
       if (value === separator) {
         value = ' ';
@@ -954,10 +957,18 @@ const builder: SlugBuilder = (config = DEFAULT_OPTIONS) => {
       separator = '-',
     } = { ...DEFAULT_OPTIONS, ...config, ...options };
 
-    const localeCharset = localeKey ? mapping.locales[localeKey] : undefined;
-    const charset = localeCharset ? { ...mapping.charset, ...localeCharset } : mapping.charset;
+    if (!input) {
+      return '';
+    }
 
-    let slug = transform(input, { charset, remove, separator });
+    const localeCharset = localeKey ? mapping.locales[localeKey] : undefined;
+
+    let slug = transform(input, {
+      charset: mapping.charset,
+      localeCharset,
+      remove,
+      separator,
+    });
 
     if (strict) {
       slug = slug.replace(/[^A-Za-z0-9\s]/g, '');
@@ -978,10 +989,7 @@ const builder: SlugBuilder = (config = DEFAULT_OPTIONS) => {
 
   replace.create = builder;
   replace.extend = (charset) => {
-    mapping.charset = {
-      ...mapping.charset,
-      ...charset,
-    };
+    Object.assign(mapping.charset, charset);
   };
 
   return replace;
