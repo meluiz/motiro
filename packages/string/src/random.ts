@@ -35,6 +35,10 @@ export const random = (length: number, alphabet: string = CHARACTERS): string =>
     return '';
   }
 
+  if (!alphabet) {
+    throw new TypeError('Alphabet must not be empty');
+  }
+
   const size = alphabet.length;
   let result = '';
 
