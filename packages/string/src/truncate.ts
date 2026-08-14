@@ -41,7 +41,7 @@ const DEFAULT_OPTIONS = {
  * // => 'Hello...'
  *
  * truncate('<p>Hello <em>friend</em></p>', 10);
- * // => '<p>Hello <em>fr...</em></p>'
+ * // => '<p>Hello <em>frie...</em></p>'
  * ```
  */
 export const truncate = (input: string, length: number, options?: TruncateOptions): string => {
