@@ -26,6 +26,8 @@ const DEFAULT_OPTIONS = {
   delimiters: ['{{', '}}'] as const,
 };
 
+const DEFAULT_PATTERN = /(\\)?\{\{([\s\S]*?)\}\}/g;
+
 /**
  * Replaces `{{key}}` placeholders in a string with values from `data`.
  *
@@ -58,12 +60,16 @@ export const interpolate = <T extends object>(
   data: T,
   options?: InterpolateOptions,
 ): string => {
-  const {
-    fallback,
-    delimiters: [open, close],
-  } = { ...DEFAULT_OPTIONS, ...options };
+  const { fallback, delimiters } = {
+    ...DEFAULT_OPTIONS,
+    ...options,
+  };
 
-  const pattern = buildPattern(open, close);
+  const pattern =
+    delimiters === DEFAULT_OPTIONS.delimiters ||
+    (delimiters[0] === '{{' && delimiters[1] === '}}')
+      ? DEFAULT_PATTERN
+      : buildPattern(delimiters[0], delimiters[1]);
 
   return input.replace(pattern, (match, escaped, rawKey) => {
     if (escaped) {
