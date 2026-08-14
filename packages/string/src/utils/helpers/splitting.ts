@@ -1,66 +1,4 @@
-import { hasEmptySpace } from '../guards';
-import {
-  HTML_COMMENT_REGEX,
-  HTML_TAG_REGEX,
-  MAGIC_SPLIT_REGEX,
-  SPACE_SPLIT_REGEX,
-} from '../regexes';
-import { DEFAULT_OPTIONS, SELF_CLOSING_TAGS } from './constants';
-
-/**
- * Finds the index of the first match of `regex` in `input`.
- */
-export const getFirstLetterIndex = (input: string, regex: RegExp): number => {
-  const match = input.matchAll(regex).next().value;
-  return match?.index ?? 0;
-};
-
-/**
- * Chooses the appropriate regex for splitting into words:
- * - If there is any space, split on whitespace.
- * - Otherwise, use the "magic" pattern.
- */
-export const getWordSplitRegex = (input: string): RegExp => {
-  return hasEmptySpace(input) ? SPACE_SPLIT_REGEX : MAGIC_SPLIT_REGEX;
-};
-
-type WordsAndPrefixes = {
-  parts: string[];
-  prefixes: string[];
-};
-
-/**
- * Splits `input` by `regex`, capturing each match and the text before it.
- */
-export const getWordsAndPrefixes = (input: string, regex: RegExp): WordsAndPrefixes => {
-  const result: WordsAndPrefixes = { parts: [], prefixes: [] };
-  const matches = input.matchAll(regex);
-
-  let lastWordEndIndex = 0;
-
-  for (const match of matches) {
-    if (typeof match.index !== 'number') {
-      continue;
-    }
-
-    const word = match[0];
-    result.parts.push(word);
-
-    const prefix = input.slice(lastWordEndIndex, match.index).trim();
-    result.prefixes.push(prefix);
-
-    lastWordEndIndex = match.index + word.length;
-  }
-
-  const tail = input.slice(lastWordEndIndex).trim();
-
-  if (tail) {
-    result.parts.push('');
-    result.prefixes.push(tail);
-  }
-
-  return result;
-};
+import { HTML_COMMENT_REGEX, HTML_TAG_REGEX } from '../regexes';
 
 /**
  * Strategy used to measure the truncation length.
@@ -138,7 +76,28 @@ enum Mode {
  * Void (self-closing) HTML elements that must never be pushed onto the open-tag
  * stack. Stored as a `Set` for O(1) membership checks.
  */
-const SELF_CLOSING = new Set(SELF_CLOSING_TAGS);
+const SELF_CLOSING = new Set([
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr',
+]);
+
+const TRAILING_CLOSE_TAG_REGEX = /<\/[a-z0-9]+>\s*$/i;
+
+const hasVisibleContent = (input: string): boolean => {
+  return input.replace(HTML_COMMENT_REGEX, '').replace(HTML_TAG_REGEX, '').trim().length > 0;
+};
 
 /**
  * Truncates a string to a given length, optionally preserving well-formed HTML.
@@ -179,11 +138,7 @@ export const getTruncatedString = (
     return '';
   }
 
-  // Spread onto a fresh object: never mutate the shared (readonly) defaults.
-  const { type, tags, strict, ellipsis } = {
-    ...DEFAULT_OPTIONS.TRUNCATED_STRING,
-    ...options,
-  };
+  const { tags = true, strict = true, type = 'words', ellipsis = '...' } = options ?? {};
 
   // Resolve the measurement mode once, before the loop.
   const mode =
@@ -271,7 +226,7 @@ export const getTruncatedString = (
               result = result.trimEnd();
             }
 
-            truncated = true;
+            truncated = hasVisibleContent(sentence.slice(i + 1));
             break loop;
           }
         }
@@ -279,7 +234,7 @@ export const getTruncatedString = (
         characters++;
 
         if (mode === Mode.Characters && characters >= length) {
-          truncated = true;
+          truncated = hasVisibleContent(sentence.slice(i + 1));
           break loop;
         }
 
@@ -294,7 +249,7 @@ export const getTruncatedString = (
           result += char;
 
           if (mode === Mode.Characters && characters >= length) {
-            truncated = true;
+            truncated = hasVisibleContent(sentence.slice(i + 1));
             break loop;
           }
         } else if (state === State.Tag) {
@@ -346,10 +301,8 @@ export const getTruncatedString = (
  * @returns The HTML with the ellipsis placed inside the innermost trailing tag.
  */
 const insertEllipsis = (html: string, ellipsis: string): string => {
-  const trailingCloseTag = /<\/[a-z0-9]+>\s*$/i;
-
   // If the string doesn't end in a closing tag, just append.
-  if (!trailingCloseTag.test(html)) {
+  if (!TRAILING_CLOSE_TAG_REGEX.test(html)) {
     return `${html}${ellipsis}`;
   }
 
@@ -358,8 +311,8 @@ const insertEllipsis = (html: string, ellipsis: string): string => {
   let cut = html.length;
   let head = html;
 
-  while (trailingCloseTag.test(head)) {
-    cut = head.search(trailingCloseTag);
+  while (TRAILING_CLOSE_TAG_REGEX.test(head)) {
+    cut = head.search(TRAILING_CLOSE_TAG_REGEX);
     head = head.slice(0, cut);
   }
 

@@ -1,6 +1,9 @@
 import { hasEmptySpace } from '../guards';
-import { DEFAULT_OPTIONS } from './constants';
-import { getWordSplitRegex, getWordsAndPrefixes } from './splitting';
+import { getWordSplitRegex, getWordsAndPrefixes } from './words';
+
+const EMPTY_KEEP: string[] = [];
+
+const escapeCharacterClass = (input: string): string => input.replace(/[\\\]^-]/g, '\\$&');
 
 /**
  * Trims and normalizes a string to the given Unicode form.
@@ -10,23 +13,6 @@ const getNormalizedText = (
   form: 'NFC' | 'NFD' | 'NFKC' | 'NFKD' = 'NFC',
 ): string => {
   return input.trim().normalize(form);
-};
-
-/**
- * Removes all characters except ASCII letters, digits, and those in `keep`.
- * Performs NFD normalization before stripping.
- */
-const getDisallowedCharacters = (input: string, keep: string[]): string => {
-  const normal = getNormalizedText(input, 'NFD');
-  return normal.replace(new RegExp(`[^a-zA-ZØßø0-9${keep.join('')}]`, 'g'), '');
-};
-
-/**
- * Cleans a prefix string by removing any character not in `keep`.
- */
-const getCleanPrefix = (prefix: string, keep: string[] = []): string => {
-  const normal = getNormalizedText(prefix);
-  return normal.replace(new RegExp(`[^${keep.join('')}]`, 'g'), '');
 };
 
 type NormalizedWordsOptions = {
@@ -46,7 +32,14 @@ export const getNormalizedWords = (
     return [];
   }
 
-  const { prefix, keep, strict } = Object.assign(DEFAULT_OPTIONS.NORMALIZED_WORDS, options);
+  const prefix = options.prefix ?? '';
+  const keep = options.keep ?? EMPTY_KEEP;
+  const strict = options.strict ?? true;
+  const escapedKeep = escapeCharacterClass(keep.join(''));
+  const disallowedCharacters = strict
+    ? new RegExp(`[^a-zA-ZØßø0-9${escapedKeep}]`, 'g')
+    : undefined;
+  const disallowedPrefix = keep.length ? new RegExp(`[^${escapedKeep}]`, 'g') : undefined;
 
   const normal = getNormalizedText(input);
   const regex = getWordSplitRegex(normal);
@@ -62,8 +55,7 @@ export const getNormalizedWords = (
     let currentPrefix = originalPrefix;
 
     if (strict) {
-      const normal = getNormalizedText(currentPart, 'NFD');
-      currentPart = getDisallowedCharacters(normal, keep);
+      currentPart = getNormalizedText(currentPart, 'NFD').replace(disallowedCharacters!, '');
 
       if (!keep.length) {
         currentPrefix = '';
@@ -71,7 +63,7 @@ export const getNormalizedWords = (
     }
 
     if (keep.length && currentPrefix) {
-      currentPrefix = getCleanPrefix(currentPrefix, keep);
+      currentPrefix = getNormalizedText(currentPrefix).replace(disallowedPrefix!, '');
     }
 
     if (idx === 0) {
@@ -82,7 +74,7 @@ export const getNormalizedWords = (
       return `${currentPrefix || prefix}${currentPart}`;
     }
 
-    if (!currentPrefix && prefix.match(/\s/)) {
+    if (!currentPrefix && prefix === ' ') {
       return ` ${currentPart}`;
     }
 
