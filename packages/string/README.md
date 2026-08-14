@@ -42,7 +42,7 @@ toCamelCase('hello world'); // => 'helloWorld'
 slug('Olá, coração', { locale: 'pt' }); // => 'ola-coracao'
 
 truncate('<p>Hello <em>friend</em></p>', 10);
-// => '<p>Hello <em>fr...</em></p>'
+// => '<p>Hello <em>frie...</em></p>'
 
 interpolate('hello {{ user.name }}', { user: { name: 'John' } });
 // => 'hello John'

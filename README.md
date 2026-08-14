@@ -63,7 +63,7 @@ Fast, tree-shakeable string helpers. Seventeen case converters (camel, pascal, k
 ```ts
 import { truncate, interpolate, fromMilliseconds } from '@motiro/string';
 
-truncate('<p>Hello <em>friend</em></p>', 10); // => '<p>Hello <em>fr...</em></p>'
+truncate('<p>Hello <em>friend</em></p>', 10); // => '<p>Hello <em>frie...</em></p>'
 interpolate('hi {{ user.name }}', { user: { name: 'John' } }); // => 'hi John'
 fromMilliseconds(3600000, true); // => '1 hour'
 ```
