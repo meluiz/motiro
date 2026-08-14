@@ -64,6 +64,10 @@ const DEFAULT_OPTIONS = {
 export const excerpt = (input: string, length: number, options?: ExcerptOptions): string => {
   const { strict, ellipsis, words } = { ...DEFAULT_OPTIONS, ...options };
 
+  if (!input || length <= 0) {
+    return '';
+  }
+
   return getTruncatedString(input, length, {
     strict,
     ellipsis,
