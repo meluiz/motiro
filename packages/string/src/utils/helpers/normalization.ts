@@ -3,6 +3,13 @@ import { getWordSplitRegex, getWordsAndPrefixes } from './words';
 
 const EMPTY_KEEP: string[] = [];
 
+// Letter ranges kept in sync with MAGIC_SPLIT_REGEX (Latin + accented + Cyrillic).
+// ß (U+00DF) and à-ÿ are lowercase; À-Þ and А-Я are uppercase.
+const LETTER_RANGES = 'a-zA-ZÀ-ÖØ-Þß-öø-ÿА-Яа-я';
+
+// Separators that always act as word boundaries when present in the input.
+const BOUNDARY_SEPARATORS = ['_', '-', '/', '.', '\\', ':'];
+
 const escapeCharacterClass = (input: string): string => input.replace(/[\\\]^-]/g, '\\$&');
 
 /**
@@ -36,13 +43,26 @@ export const getNormalizedWords = (
   const keep = options.keep ?? EMPTY_KEEP;
   const strict = options.strict ?? true;
   const escapedKeep = escapeCharacterClass(keep.join(''));
-  const disallowedCharacters = strict
-    ? new RegExp(`[^a-zA-ZØßø0-9${escapedKeep}]`, 'g')
-    : undefined;
   const disallowedPrefix = keep.length ? new RegExp(`[^${escapedKeep}]`, 'g') : undefined;
+  const disallowedCharacters = strict
+    ? new RegExp(`[^${LETTER_RANGES}0-9${escapedKeep}]`, 'g')
+    : undefined;
 
-  const normal = getNormalizedText(input);
-  const regex = getWordSplitRegex(normal);
+  // Existing separators must become word boundaries, not be silently dropped.
+  // Convert any that aren't explicitly kept into spaces before splitting.
+  const separatorsToKeep = new Set(keep);
+  const boundarySeparators = BOUNDARY_SEPARATORS.filter(
+    (character) => !separatorsToKeep.has(character),
+  );
+
+  let normal = getNormalizedText(input);
+
+  if (boundarySeparators.length) {
+    const boundaryClass = escapeCharacterClass(boundarySeparators.join(''));
+    normal = normal.replace(new RegExp(`[${boundaryClass}]+`, 'g'), ' ').trim();
+  }
+
+  const regex = getWordSplitRegex();
 
   const { parts, prefixes } = getWordsAndPrefixes(normal, regex);
 
@@ -55,7 +75,7 @@ export const getNormalizedWords = (
     let currentPrefix = originalPrefix;
 
     if (strict) {
-      currentPart = getNormalizedText(currentPart, 'NFD').replace(disallowedCharacters!, '');
+      currentPart = getNormalizedText(currentPart, 'NFC').replace(disallowedCharacters!, '');
 
       if (!keep.length) {
         currentPrefix = '';

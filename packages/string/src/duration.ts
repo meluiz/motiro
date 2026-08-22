@@ -133,7 +133,7 @@ export const fromSeconds = (input: number, long?: boolean): PrettyDuration => {
  */
 export const toSeconds = (input: string | number): number => {
   if (typeof input === 'number') {
-    return input;
+    return Math.floor(input);
   }
 
   const milliseconds = getMillisecondsParse(input);

@@ -1,5 +1,4 @@
-import { hasEmptySpace } from '../guards';
-import { MAGIC_SPLIT_REGEX, SPACE_SPLIT_REGEX } from '../regexes';
+import { MAGIC_SPLIT_REGEX } from '../regexes';
 
 /**
  * Finds the index of the first match while preserving a shared regex state.
@@ -13,10 +12,15 @@ export const getFirstLetterIndex = (input: string, regex: RegExp): number => {
 };
 
 /**
- * Chooses the appropriate regex for splitting an input into words.
+ * Returns the regex used to split an input into words.
+ *
+ * MAGIC_SPLIT_REGEX matches only letter/digit runs, so whitespace between words
+ * is naturally skipped. Using it unconditionally (rather than falling back to a
+ * space-only split) keeps camelCase, digit and acronym boundaries intact even
+ * when the input also contains spaces.
  */
-export const getWordSplitRegex = (input: string): RegExp => {
-  return hasEmptySpace(input) ? SPACE_SPLIT_REGEX : MAGIC_SPLIT_REGEX;
+export const getWordSplitRegex = (): RegExp => {
+  return MAGIC_SPLIT_REGEX;
 };
 
 type WordsAndPrefixes = {

@@ -4,6 +4,6 @@ export {
   NO_CASE_SPLIT_REGEXP,
   NO_CASE_STRIP_REGEXP,
 } from './case';
-export { HTML_COMMENT_REGEX, HTML_TAG_REGEX } from './html';
+export { HTML_COMMENT_REGEX, HTML_ENTITY_AT_START_REGEX, HTML_TAG_REGEX } from './html';
 export { MAGIC_SPLIT_REGEX, SPACE_SPLIT_REGEX, TOKENS_REGEX, WHITESPACE_REGEX } from './split';
 export { SMALL_WORDS_REGEX } from './text';
