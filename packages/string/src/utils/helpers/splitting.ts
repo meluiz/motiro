@@ -1,4 +1,4 @@
-import { HTML_COMMENT_REGEX, HTML_TAG_REGEX } from '../regexes';
+import { HTML_COMMENT_REGEX, HTML_ENTITY_AT_START_REGEX, HTML_TAG_REGEX } from '../regexes';
 
 /**
  * Strategy used to measure the truncation length.
@@ -134,7 +134,9 @@ export const getTruncatedString = (
   length: number,
   options?: TruncatedStringOptions,
 ): string => {
-  if (!input || length <= 0) {
+  const limit = Math.floor(length);
+
+  if (!input || limit <= 0) {
     return '';
   }
 
@@ -221,7 +223,7 @@ export const getTruncatedString = (
         if (mode === Mode.Words) {
           words++;
 
-          if (words >= length) {
+          if (words >= limit) {
             if (!strict) {
               result = result.trimEnd();
             }
@@ -233,7 +235,7 @@ export const getTruncatedString = (
 
         characters++;
 
-        if (mode === Mode.Characters && characters >= length) {
+        if (mode === Mode.Characters && characters >= limit) {
           truncated = hasVisibleContent(sentence.slice(i + 1));
           break loop;
         }
@@ -245,10 +247,31 @@ export const getTruncatedString = (
       // Any other character.
       default: {
         if (state === State.Text) {
+          // An HTML entity (e.g. &amp;) is one visible character and must be
+          // emitted whole — consume the entire entity as a single unit.
+          if (char === '&') {
+            const entityMatch = HTML_ENTITY_AT_START_REGEX.exec(sentence.slice(i));
+
+            if (entityMatch) {
+              const entity = entityMatch[0];
+
+              characters++;
+              result += entity;
+
+              if (mode === Mode.Characters && characters >= limit) {
+                truncated = hasVisibleContent(sentence.slice(i + entity.length));
+                break loop;
+              }
+
+              i += entity.length;
+              continue;
+            }
+          }
+
           characters++;
           result += char;
 
-          if (mode === Mode.Characters && characters >= length) {
+          if (mode === Mode.Characters && characters >= limit) {
             truncated = hasVisibleContent(sentence.slice(i + 1));
             break loop;
           }
@@ -268,7 +291,7 @@ export const getTruncatedString = (
     if (state === State.Text && mode === Mode.Paragraphs && char === '\n') {
       paragraphs++;
 
-      if (paragraphs >= length) {
+      if (paragraphs >= limit) {
         truncated = true;
         break;
       }
