@@ -31,7 +31,9 @@ const CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567
  * ```
  */
 export const random = (length: number, alphabet: string = CHARACTERS): string => {
-  if (length <= 0) {
+  const count = Math.floor(length);
+
+  if (count <= 0) {
     return '';
   }
 
@@ -42,7 +44,7 @@ export const random = (length: number, alphabet: string = CHARACTERS): string =>
   const size = alphabet.length;
   let result = '';
 
-  for (let index = 0; index < length; index++) {
+  for (let index = 0; index < count; index++) {
     result += alphabet.charAt(Math.floor(Math.random() * size));
   }
 
