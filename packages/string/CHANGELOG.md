@@ -1,5 +1,11 @@
 # @motiro/string
 
+## 0.1.3
+
+### Patch Changes
+
+- [#6](https://github.com/meluiz/motiro/pull/6) [`c597aee`](https://github.com/meluiz/motiro/commit/c597aee9d76bf62fbd3a50469f902d8437bbafb7) Thanks [@meluiz](https://github.com/meluiz)! - Fix edge cases in string normalization, case conversion, and truncation, including HTML entities, Unicode characters, separators, and fractional lengths.
+
 ## 0.1.2
 
 ### Patch Changes
