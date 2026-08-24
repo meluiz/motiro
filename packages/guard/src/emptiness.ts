@@ -43,7 +43,7 @@ export const isEmptyArray = (value: unknown): value is [] => {
  *
  * @remarks
  * Uses `Reflect.ownKeys`, so both string and symbol own keys count. Array-likes
- * pass through `isObjectLike`, so `[]` is reported as empty; guard with
+ * pass through `isObjectLike`, so `[]` is NOT reported as empty; guard with
  * `isEmptyArray` first if you need to distinguish arrays from objects.
  *
  * @example
