@@ -1,5 +1,11 @@
 # @motiro/guard
 
+## 0.1.2
+
+### Patch Changes
+
+- [#8](https://github.com/meluiz/motiro/pull/8) [`f9832fa`](https://github.com/meluiz/motiro/commit/f9832fa83686e64a3bf44e3fbc6cee67684d5ff7) Thanks [@meluiz](https://github.com/meluiz)! - Add test suite for the guard package (primitives, numeric, objects, emptiness, combinators). No behavioral changes.
+
 ## 0.1.1
 
 ### Patch Changes
