@@ -51,6 +51,11 @@
     "build": "tsdown",
     "clean": "rm -rf dist"
   },
+  "dependencies": {
+    "@motiro/guard": "workspace:*",
+    "@motiro/string": "workspace:*",
+    "@motiro/types": "workspace:*"
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
     "@biomejs/biome": "catalog:",
