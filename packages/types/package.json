@@ -32,7 +32,7 @@
     "utility-types"
   ],
   "types": "./dist/index.d.mts",
-  "files": ["dist", "README.md", "package.json"],
+  "files": ["dist", "README.md"],
   "exports": {
     "./package.json": "./package.json",
     ".": {
