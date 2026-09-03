@@ -23,7 +23,7 @@
     "format": "biome format .",
     "format:fix": "biome format . --write",
     "typecheck": "tsc --noEmit",
-    "preflight": "bun run lint && bun run typecheck",
+    "preflight": "bun run build && bun run lint && bun run typecheck",
     "prepare": "lefthook install",
     "version": "changeset version",
     "release": "changeset publish"
