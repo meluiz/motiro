@@ -6,7 +6,7 @@
   "sideEffects": false,
   "name": "@motiro/guard",
   "description": "Composable TypeScript type guards and runtime validation for the Motiro toolkit — small, well-typed predicates you can compose.",
-  "packageManager": "bun@1.3.14",
+  "packageManager": "bun@1.4.0",
   "author": {
     "name": "meluiz",
     "url": "https://meluiz.com"

@@ -6,7 +6,7 @@
   "sideEffects": false,
   "name": "@motiro/string",
   "description": "Fast, tree-shakeable string helpers — case conversion, trimming, padding, slugify, templating and more. Part of the Motiro utility toolkit.",
-  "packageManager": "bun@1.3.14",
+  "packageManager": "bun@1.4.0",
   "author": {
     "name": "meluiz",
     "url": "https://meluiz.com"
