@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "name": "@motiro/core",
+  "description": "The complete Motiro toolkit — re-exports every @motiro package as a single tree-shakeable entry point.",
+  "packageManager": "bun@1.4.0",
+  "author": {
+    "name": "meluiz",
+    "url": "https://meluiz.com"
+  },
+  "homepage": "https://github.com/meluiz/motiro",
+  "repository": {
+    "type": "git",
+    "directory": "packages/core",
+    "url": "git+https://github.com/meluiz/motiro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meluiz/motiro/issues"
+  },
+  "keywords": [
+    "core",
+    "motiro",
+    "toolkit",
+    "utils",
+    "utilities",
+    "helpers",
+    "tree-shakeable",
+    "typescript"
+  ],
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": ["dist", "README.md"],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./*": {
+      "types": "./dist/*.d.mts",
+      "default": "./dist/*.mjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "catalog:",
+    "@biomejs/biome": "catalog:",
+    "publint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  }
+}
