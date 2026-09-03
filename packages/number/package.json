@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "name": "@motiro/number",
+  "description": "Fast, tree-shakeable number utilities for the Motiro toolkit — clamping, rounding, interpolation, ranges and formatting.",
+  "packageManager": "bun@1.4.0",
+  "author": {
+    "name": "meluiz",
+    "url": "https://meluiz.com"
+  },
+  "homepage": "https://github.com/meluiz/motiro",
+  "repository": {
+    "type": "git",
+    "directory": "packages/number",
+    "url": "git+https://github.com/meluiz/motiro.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meluiz/motiro/issues"
+  },
+  "keywords": [
+    "number",
+    "numbers",
+    "motiro",
+    "toolkit",
+    "math",
+    "clamp",
+    "lerp",
+    "range",
+    "random",
+    "typescript"
+  ],
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": ["dist", "README.md"],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./*": {
+      "types": "./dist/*.d.mts",
+      "default": "./dist/*.mjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "catalog:",
+    "@biomejs/biome": "catalog:",
+    "publint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:"
+  }
+}
