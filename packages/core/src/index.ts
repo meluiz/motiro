@@ -1,4 +1,4 @@
-export type { Guard, GuardShape, GuardType, InferShape } from '@motiro/guard';
+export type { Guard, GuardShape, GuardType, InferShape } from './guard';
 export type {
   CaseOptions,
   DurationUnit,
@@ -11,7 +11,7 @@ export type {
   SlugBuilder,
   SlugOptions,
   TruncateOptions,
-} from '@motiro/string';
+} from './string';
 export type {
   Alphanumeric,
   Branded,
@@ -38,7 +38,7 @@ export type {
   Whitespace,
   Writable,
   Zero,
-} from '@motiro/types';
+} from './types';
 
 export {
   isArray,
@@ -82,7 +82,7 @@ export {
   not,
   nullable,
   optional,
-} from '@motiro/guard';
+} from './guard';
 export {
   capitalize,
   excerpt,
@@ -112,4 +112,4 @@ export {
   toTrainCase,
   toUpperCase,
   truncate,
-} from '@motiro/string';
+} from './string';
