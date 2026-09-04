@@ -6,7 +6,7 @@
   "sideEffects": false,
   "name": "@motiro/monorepo",
   "description": "Explore a versatile assortment of helper utility functions",
-  "packageManager": "bun@1.4.0",
+  "packageManager": "bun@1.4.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/meluiz/motiro"

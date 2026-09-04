@@ -6,7 +6,7 @@
   "sideEffects": false,
   "name": "@motiro/types",
   "description": "Shared TypeScript utility types for the Motiro toolkit — type-level helpers with zero runtime footprint.",
-  "packageManager": "bun@1.4.0",
+  "packageManager": "bun@1.4.1",
   "author": {
     "name": "meluiz",
     "url": "https://meluiz.com"

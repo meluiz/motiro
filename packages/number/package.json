@@ -6,7 +6,7 @@
   "sideEffects": false,
   "name": "@motiro/number",
   "description": "Fast, tree-shakeable number utilities for the Motiro toolkit — clamping, rounding, interpolation, ranges and formatting.",
-  "packageManager": "bun@1.4.0",
+  "packageManager": "bun@1.4.1",
   "author": {
     "name": "meluiz",
     "url": "https://meluiz.com"
