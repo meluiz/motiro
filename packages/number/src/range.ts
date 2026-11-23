@@ -1,4 +1,9 @@
 /**
+ * The most elements a JavaScript array can hold.
+ */
+const MAX_LENGTH = 2 ** 32 - 1;
+
+/**
  * Generates an array of numbers over an interval.
  *
  * The range is half-open: `start` is included, `end` is not — matching
@@ -55,24 +60,24 @@
  */
 export const range = (start: number, end: number, step: number = 1): number[] => {
   if (Number.isNaN(start) || Number.isNaN(end) || Number.isNaN(step)) {
-    throw new RangeError('Range bounds and step must be numbers.');
+    throw new RangeError('Range bounds and step must be numbers');
   }
 
   if (step === 0) {
-    throw new RangeError('Step must not be zero.');
+    throw new RangeError('Step must not be zero');
   }
 
   const distance = Math.abs(end - start);
 
   if (!Number.isFinite(distance)) {
-    throw new RangeError('Range bounds and step must produce a finite length.');
+    throw new RangeError('Range bounds and step must produce a finite length');
   }
 
   const size = Math.abs(step);
   const length = distance === 0 ? 0 : Math.max(1, countSteps(distance / size));
 
   if (length > MAX_LENGTH) {
-    throw new RangeError(`Range would hold ${length} values, more than an array allows.`);
+    throw new RangeError(`Range would hold ${length} values, more than an array allows`);
   }
 
   const direction = end < start ? -size : size;
@@ -91,11 +96,6 @@ export const range = (start: number, end: number, step: number = 1): number[] =>
 
   return values;
 };
-
-/**
- * The most elements a JavaScript array can hold.
- */
-const MAX_LENGTH = 2 ** 32 - 1;
 
 /**
  * Counts how many steps fit before the end of the interval, treating a ratio

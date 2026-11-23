@@ -62,11 +62,11 @@ export const random = (min: number, max: number, options?: RandomOptions): numbe
   const { float = false } = options ?? {};
 
   if (!Number.isFinite(min) || !Number.isFinite(max)) {
-    throw new RangeError('Bounds must be finite numbers.');
+    throw new RangeError('Bounds must be finite numbers');
   }
 
   if (min > max) {
-    throw new RangeError('Minimum value cannot be greater than maximum value.');
+    throw new RangeError('Minimum value cannot be greater than maximum value');
   }
 
   if (float) {
@@ -78,7 +78,7 @@ export const random = (min: number, max: number, options?: RandomOptions): numbe
   const upper = Math.floor(max);
 
   if (lower > upper) {
-    throw new RangeError('No integer exists between the given bounds.');
+    throw new RangeError('No integer exists between the given bounds');
   }
 
   return lower + Math.floor(Math.random() * (upper - lower + 1));

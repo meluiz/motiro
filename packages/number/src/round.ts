@@ -53,7 +53,7 @@ export const round = (value: number, decimals: number = 0): number => {
   const places = Math.trunc(decimals);
 
   if (places < -292 || places > 292) {
-    throw new RangeError('Decimals must be between -292 and 292.');
+    throw new RangeError('Decimals must be between -292 and 292');
   }
 
   if (!Number.isFinite(value)) {

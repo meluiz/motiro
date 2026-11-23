@@ -108,19 +108,11 @@ export const interpolate = (
   const { input, output } = ranges;
   const lastIndex = input.length - 1;
 
-  const firstInput = input[0];
-  const lastInput = input[lastIndex];
-  const firstOutput = output[0];
-  const lastOutput = output[lastIndex];
-
-  if (
-    firstInput === undefined ||
-    lastInput === undefined ||
-    firstOutput === undefined ||
-    lastOutput === undefined
-  ) {
-    throw new RangeError('Input and output ranges must not contain holes.');
-  }
+  // `validateRanges` has ruled out holes, so every index is populated.
+  const firstInput = input[0] as number;
+  const lastInput = input[lastIndex] as number;
+  const firstOutput = output[0] as number;
+  const lastOutput = output[lastIndex] as number;
 
   // The endpoints belong to the range, so they map to their output even when
   // the strategy for values beyond them is 'identity'.
@@ -196,19 +188,19 @@ const validateRanges = (ranges: InterpolateRanges): void => {
 
   if (input.length !== output.length) {
     throw new RangeError(
-      `Input (length: ${input.length}) and output (length: ${output.length}) must be the same length.`,
+      `Input (length: ${input.length}) and output (length: ${output.length}) must be the same length`,
     );
   }
 
   if (input.length < 2) {
     throw new RangeError(
-      `Input must contain at least two elements for interpolation, received ${input.length}.`,
+      `Input must contain at least two elements for interpolation, received ${input.length}`,
     );
   }
 
   for (let index = 0; index < input.length; index++) {
     if (input[index] === undefined || output[index] === undefined) {
-      throw new RangeError('Input and output ranges must not contain holes.');
+      throw new RangeError('Input and output ranges must not contain holes');
     }
   }
 
@@ -218,7 +210,7 @@ const validateRanges = (ranges: InterpolateRanges): void => {
 
     if (current >= next) {
       throw new RangeError(
-        `Input must be strictly increasing, but index ${index} (${current}) is not below index ${index + 1} (${next}).`,
+        `Input must be strictly increasing, but index ${index} (${current}) is not below index ${index + 1} (${next})`,
       );
     }
   }

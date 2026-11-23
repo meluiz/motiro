@@ -63,12 +63,12 @@ export const clamp = (value: number, limits: ClampOptions): number => {
   const { min, max } = limits;
 
   if (Number.isNaN(min) || Number.isNaN(max)) {
-    throw new RangeError('Bounds must not be NaN.');
+    throw new RangeError('Bounds must not be NaN');
   }
 
   if (min != null && max != null) {
     if (min > max) {
-      throw new RangeError('Minimum value cannot be greater than maximum value.');
+      throw new RangeError('Minimum value cannot be greater than maximum value');
     }
 
     return Math.min(Math.max(value, min), max);

@@ -83,11 +83,11 @@ export const getBytesFormat = (bytes: number, options: BytesFormatOptions): stri
   const decimals = Math.trunc(options.decimals);
 
   if (!Number.isFinite(bytes)) {
-    throw new RangeError('Bytes must be a finite number.');
+    throw new RangeError('Bytes must be a finite number');
   }
 
   if (!(decimals >= 0 && decimals <= MAX_DECIMALS)) {
-    throw new RangeError(`Decimals must be between 0 and ${MAX_DECIMALS}.`);
+    throw new RangeError(`Decimals must be between 0 and ${MAX_DECIMALS}`);
   }
 
   const base = binary ? 1024 : 1000;

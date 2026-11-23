@@ -44,7 +44,7 @@ import { sum } from './sum';
  */
 export const mean = (values: readonly number[]): number => {
   if (values.length === 0) {
-    throw new RangeError('Cannot calculate the mean of an empty list.');
+    throw new RangeError('Cannot calculate the mean of an empty list');
   }
 
   const total = sum(values);
