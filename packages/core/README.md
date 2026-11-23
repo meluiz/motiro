@@ -78,18 +78,42 @@ of which is also publishable and installable on its own:
 | Package          | What it covers                                          |
 | ---------------- | ------------------------------------------------------- |
 | `@motiro/guard`  | Composable runtime type guards (`isString`, `isNumber`) |
+| `@motiro/number` | Clamping, rounding, interpolation, ranges, formatting   |
 | `@motiro/string` | Case conversion, trimming, padding, slugs, truncation   |
 | `@motiro/types`  | Type-level utilities, zero runtime                      |
 
 See each package's README for its full API.
 
+### Name clashes
+
+`@motiro/number` and `@motiro/string` both export `interpolate` and `random`.
+The root entry point exports each under a suffixed alias, so the call site says
+which one it means:
+
+| Root export                | Original                                   |
+| -------------------------- | ------------------------------------------ |
+| `interpolateNumber`        | `interpolate` from `@motiro/number`        |
+| `interpolateString`        | `interpolate` from `@motiro/string`        |
+| `randomNumber`             | `random` from `@motiro/number`             |
+| `randomString`             | `random` from `@motiro/string`             |
+| `InterpolateNumberOptions` | `InterpolateOptions` from `@motiro/number` |
+| `InterpolateStringOptions` | `InterpolateOptions` from `@motiro/string` |
+
+The unsuffixed `interpolate`, `random` and `InterpolateOptions` remain at the
+root bound to `@motiro/string`, as they were before `@motiro/number` joined the
+toolkit. The domain subpaths always use the original names:
+
+```ts
+import { interpolate, random } from "@motiro/core/number";
+```
+
 ## Conventions
 
 A few things worth knowing before you reach for a function:
 
-- **No input validation in the utilities.** `clamp(value, min, max)` trusts its
-  types. If you're handling `unknown` data, narrow it with `@motiro/guard`
-  first.
+- **No input validation in the utilities.** `clamp(value, { min, max })`
+  trusts its types. If you're handling `unknown` data, narrow it with
+  `@motiro/guard` first.
 - **Configuration errors throw.** A utility throws a `RangeError` only when a
   _configuration_ argument is outside its supported domain — for example
   `clamp` with `min > max`. It never throws over the type of the main input.

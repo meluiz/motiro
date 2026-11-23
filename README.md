@@ -2,7 +2,7 @@
 
 > Explore a versatile assortment of helper utility functions.
 
-Motiro is a family of small, focused TypeScript utilities for everyday work — validating values, reshaping strings, and sharpening your types. Instead of one big dependency, each concern ships as its own package under the `@motiro` scope, so you install only what you need. Everything is ESM-only, side-effect free, fully tree-shakeable, and typed to the letter.
+Motiro is a family of small, focused TypeScript utilities for everyday work — validating values, reshaping strings, working with numbers, and sharpening your types. Instead of one big dependency, each concern ships as its own package under the `@motiro` scope, so you install only what you need. Everything is ESM-only, side-effect free, fully tree-shakeable, and typed to the letter.
 
 ## Why Motiro
 
@@ -77,6 +77,18 @@ import { isArrayOf, isString, isDefined } from '@motiro/guard';
 
 isArrayOf(isString)(['a', 'b']); // => true
 [1, null, 2].filter(isDefined); // => number[]
+```
+
+### [`@motiro/number`](./packages/number)
+
+Fast, tree-shakeable number helpers. Bounded `clamp` and `round` that gets `1.005` right, `lerp` and piecewise `interpolate` with configurable extrapolation, drift-free half-open `range`, compensated `sum` and `mean`, cached `Intl` `format`, and human-readable byte sizes with `fromBytes` / `toBytes`.
+
+```ts
+import { clamp, interpolate, fromBytes } from '@motiro/number';
+
+clamp(15, { min: 0, max: 10 }); // => 10
+interpolate(75, { input: [0, 50, 100], output: [0, 10, 0] }); // => 5
+fromBytes(1536); // => '1.5 KB'
 ```
 
 ### [`@motiro/types`](./packages/types)

@@ -1,17 +1,27 @@
-export type { Guard, GuardShape, GuardType, InferShape } from '@motiro/guard';
+export type { Guard, GuardShape, GuardType, InferShape } from './guard';
+export type {
+  BytesOptions,
+  ClampOptions,
+  Extrapolate,
+  FormatOptions,
+  InterpolateOptions as InterpolateNumberOptions,
+  InterpolateRanges,
+  RandomOptions,
+} from './number';
 export type {
   CaseOptions,
   DurationUnit,
   DurationUnitAnyCase,
   ExcerptOptions,
   InterpolateOptions,
+  InterpolateOptions as InterpolateStringOptions,
   PrettyDuration,
   SentenceOptions,
   Slug,
   SlugBuilder,
   SlugOptions,
   TruncateOptions,
-} from '@motiro/string';
+} from './string';
 export type {
   Alphanumeric,
   Branded,
@@ -38,7 +48,7 @@ export type {
   Whitespace,
   Writable,
   Zero,
-} from '@motiro/types';
+} from './types';
 
 export {
   isArray,
@@ -82,14 +92,35 @@ export {
   not,
   nullable,
   optional,
-} from '@motiro/guard';
+} from './guard';
+// `interpolate` and `random` exist in both `@motiro/number` and
+// `@motiro/string`, so the root exports each under a suffixed alias —
+// `interpolateNumber` / `interpolateString`, `randomNumber` / `randomString`.
+// The unsuffixed names stay bound to `@motiro/string`, as they were before
+// `@motiro/number` joined the toolkit. The domain subpaths keep the original
+// names.
+export {
+  clamp,
+  format,
+  fromBytes,
+  interpolate as interpolateNumber,
+  lerp,
+  mean,
+  random as randomNumber,
+  range,
+  round,
+  sum,
+  toBytes,
+} from './number';
 export {
   capitalize,
   excerpt,
   fromMilliseconds,
   fromSeconds,
   interpolate,
+  interpolate as interpolateString,
   random,
+  random as randomString,
   sentence,
   slug,
   toAdaCase,
@@ -112,4 +143,4 @@ export {
   toTrainCase,
   toUpperCase,
   truncate,
-} from '@motiro/string';
+} from './string';
