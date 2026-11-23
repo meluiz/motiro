@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "@motiro/guard": "workspace:*",
+    "@motiro/number": "workspace:*",
     "@motiro/string": "workspace:*",
     "@motiro/types": "workspace:*"
   },

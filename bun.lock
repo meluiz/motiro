@@ -21,9 +21,10 @@
     },
     "packages/core": {
       "name": "@motiro/core",
-      "version": "0.0.0",
+      "version": "0.1.0",
       "dependencies": {
         "@motiro/guard": "workspace:*",
+        "@motiro/number": "workspace:*",
         "@motiro/string": "workspace:*",
         "@motiro/types": "workspace:*",
       },
